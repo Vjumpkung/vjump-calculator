@@ -14,14 +14,11 @@ function App() {
   const [input, setInput] = useState<string>("");
 
   const handleInput = (value: string) => {
-    if (input.includes(".") && value === ".") {
-      return;
-    }
-    if (input === "" && (value === "*" || value === "/")) {
-      return;
-    }
     if (input === "0" && "0,1,2,3,4,5,6,7,8,9".includes(value)) {
       setInput(value);
+      return;
+    }
+    if (/\.{2,}/.test(input + value) || /(\d+\.\d+\.)/.test(input + value)) {
       return;
     }
     if (/^0{2,}/.test(input + value)) {
