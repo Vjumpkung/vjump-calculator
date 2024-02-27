@@ -15,22 +15,25 @@ function App() {
 
   const handleInput = (value: string) => {
     if (input === "0" && "0,1,2,3,4,5,6,7,8,9".includes(value)) {
-      setInput(value);
       return;
     }
     if (/\.{2,}/.test(input + value) || /(\d+\.\d+\.)/.test(input + value)) {
       return;
     }
-    if (/^0{2,}/.test(input + value)) {
-      setInput(input);
+    if (
+      /^0{2,}/.test(input + value) ||
+      /[\+\-\*\/\s]0{2,}/.test(input + value)
+    ) {
       return;
     }
-    if (/\*{2,}/.test(input + value)) {
-      setInput(input);
-      return;
-    }
-    if (/\/{2,}/.test(input + value)) {
-      setInput(input);
+    if (
+      /\+{2,}/.test(input + value) ||
+      /\-{2,}/.test(input + value) ||
+      /\*{2,}/.test(input + value) ||
+      /\/{2,}/.test(input + value) ||
+      /[\*\/][\*\/\+\-]{2,}/.test(input + value) ||
+      /[\+\-][\*\/]{1,}/.test(input + value)
+    ) {
       return;
     }
     if (value === "C") {
@@ -69,7 +72,7 @@ function App() {
           <Typography
             fontSize={"2em"}
             textAlign={"right"}
-            sx={{ direction: "rtl" }}
+            sx={{ float: "right" }}
           >
             {input.replace(/\*/g, "×").replace(/\//g, "÷")}
           </Typography>
