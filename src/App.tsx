@@ -7,12 +7,20 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
+import { evaluate } from "mathjs";
 import { useState } from "react";
 
 function App() {
   const [input, setInput] = useState<string>("");
 
   const handleInput = (value: string) => {
+    if (input === "" && (value === "*" || value === "/")) {
+      return;
+    }
+    if (input === "0" && "0,1,2,3,4,5,6,7,8,9".includes(value)) {
+      setInput(value);
+      return;
+    }
     if (/^0{2,}/.test(input + value)) {
       setInput(input);
       return;
@@ -34,7 +42,7 @@ function App() {
       return;
     }
     if (value === "=") {
-      setInput(String(eval(input)));
+      setInput(evaluate(input).toString());
       return;
     }
     setInput(input + value);
@@ -44,15 +52,21 @@ function App() {
     <Container
       maxWidth="xs"
       sx={{
-        position: "absolute",
-        left: "50%",
-        top: "50%",
-        transform: "translate(-50%, -50%)",
+        position: "fixed",
+        top: "0",
+        left: "0",
+        right: "0",
+        bottom: "0",
+        display: "flex",
+        minHeight: "100vh",
+        flexDirection: "column",
+        placeItems: "center",
+        justifyContent: "center",
       }}
     >
-      <Grid container textAlign={"right"} columns={{ xs: 1 }} direction={"row"}>
-        <Grid item xs={1} height={"3.5em"}>
-          <Typography fontSize={"2em"}>
+      <Grid container columns={{ xs: 1 }} direction={"row"}>
+        <Grid item xs={1} height={"3.5em"} overflow={"hidden"}>
+          <Typography fontSize={"2em"} textAlign={"right"}>
             {input.replace(/\*/g, "×").replace(/\//g, "÷")}
           </Typography>
         </Grid>
