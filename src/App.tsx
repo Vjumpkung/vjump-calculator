@@ -66,7 +66,11 @@ function App() {
     >
       <Grid container columns={{ xs: 1 }} direction={"row"}>
         <Grid item xs={1} height={"3.5em"} overflow={"hidden"}>
-          <Typography fontSize={"2em"} textAlign={"right"}>
+          <Typography
+            fontSize={"2em"}
+            textAlign={"right"}
+            sx={{ direction: "rtl" }}
+          >
             {input.replace(/\*/g, "×").replace(/\//g, "÷")}
           </Typography>
         </Grid>
