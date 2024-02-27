@@ -14,6 +14,9 @@ function App() {
   const [input, setInput] = useState<string>("");
 
   const handleInput = (value: string) => {
+    if (input.includes(".") && value === ".") {
+      return;
+    }
     if (input === "" && (value === "*" || value === "/")) {
       return;
     }
